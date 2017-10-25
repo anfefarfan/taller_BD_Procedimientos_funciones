@@ -1,0 +1,150 @@
+///////////////////procedimientos del taller//////////////////////////////7
+
+
+1
+delimiter //
+create procedure tot_estu_sem()
+begin
+select semestre, count(*) as estudiantes from estudiante group by semestre;
+end//
+delimiter;
+
+call tot_estu_sem;
+
+2
+
+delimiter //
+create procedure lista_estu(IN semestre int)
+begin
+select estudiante.codigo,nombre,apellido,email from estudiante where estudiante.semestre=semestre ;
+
+end//
+delimiter;
+
+call lista_estu(1);
+call lista_estu(2);
+call lista_estu(3);
+
+3
+
+delimiter //
+create procedure correo_estu(IN codigo varchar(15))
+begin
+select email from estudiante where estudiante.codigo=codigo;
+
+end//
+delimiter;
+
+call correo_estu("98022155982");
+call correo_estu("98022155977");
+call correo_estu("98022155974");
+
+4
+delimiter //
+create procedure tipo_correo(IN email varchar(30))
+begin
+select estudiante.email,nombre from estudiante where estudiante.email like concat ('%',email,'%');
+
+end//
+delimiter;
+
+call tipo_correo("hotmail");
+call tipo_correo("gmail");
+
+5
+
+delimiter //
+create procedure asc_des(IN entero int)
+begin
+if entero = 0 then
+select nombre, email from estudiante order by nombre desc;
+else
+select nombre, email from estudiante order by nombre;
+end if;
+end//
+delimiter ;
+call asc_des(0);
+call asc_des(1);
+
+///////////////////////funciones del taller/////////////////////////////////////////
+
+1.
+
+delimiter //
+
+create function demepoblacion() RETURNS int (10)
+begin
+declare total int(10);
+select count(*) into total from estudiante;
+return total;
+end//
+
+delimiter ;
+
+select demepoblacion();
+
+2.
+
+delimiter //
+
+create function pro_cod(variable varchar(15)) returns varchar(20)
+begin
+  declare salida varchar(50);
+  set salida = (select programa from estudiante where codigo = variable);
+  return salida;
+end
+
+delimiter ;
+
+select pro_cod("98022155982");
+select pro_cod("98022155977");
+
+3.
+
+delimiter //
+create function num_corr(variable varchar(50)) returns int(50)
+begin
+  declare salida int(50);
+  set salida = (select count(*) from estudiante where email like concat ('%',variable,'%'));
+  return salida;
+end
+
+delimiter ;
+
+
+select num_corr("@");
+select num_corr("gmail");
+select num_corr("hotmail");
+
+4.
+delimiter //
+
+create function nom_corr(variable varchar(50)) returns varchar(25)
+begin
+  declare salida varchar(25);
+  set salida = (select nombre from estudiante where email = variable);
+  return salida;
+end
+
+delimiter ;
+
+select nom_corr("danielcotecnova@gmail.com");
+select nom_corr("yermanmicha@gmail.com");
+select nom_corr("fercho1286@outlook.es");
+
+5.
+
+delimiter //
+
+create function num_estu_sem(variable int(11)) returns int(20)
+begin
+  declare salida int(20);
+  set salida = (select count(*) from estudiante where semestre = variable);
+  return salida;
+end
+
+delimiter ;
+
+select num_estu_sem(1);
+select num_estu_sem(2);
+select num_estu_sem(3);
