@@ -1,4 +1,4 @@
-///////////////////procedimientos del taller//////////////////////////////7
+///////////////////procedimientos del taller//////////////////////////////
 
 
 1
@@ -7,7 +7,7 @@ create procedure tot_estu_sem()
 begin
 select semestre, count(*) as estudiantes from estudiante group by semestre;
 end//
-delimiter;
+delimiter ;
 
 call tot_estu_sem;
 
@@ -19,11 +19,14 @@ begin
 select estudiante.codigo,nombre,apellido,email from estudiante where estudiante.semestre=semestre ;
 
 end//
-delimiter;
+delimiter ;
 
 call lista_estu(1);
 call lista_estu(2);
 call lista_estu(3);
+
+
+
 
 3
 
@@ -33,7 +36,7 @@ begin
 select email from estudiante where estudiante.codigo=codigo;
 
 end//
-delimiter;
+delimiter ;
 
 call correo_estu("98022155982");
 call correo_estu("98022155977");
@@ -46,10 +49,14 @@ begin
 select estudiante.email,nombre from estudiante where estudiante.email like concat ('%',email,'%');
 
 end//
-delimiter;
+delimiter ;
 
 call tipo_correo("hotmail");
 call tipo_correo("gmail");
+
+
+
+
 
 5
 
@@ -92,7 +99,7 @@ begin
   declare salida varchar(50);
   set salida = (select programa from estudiante where codigo = variable);
   return salida;
-end
+end//
 
 delimiter ;
 
@@ -107,7 +114,7 @@ begin
   declare salida int(50);
   set salida = (select count(*) from estudiante where email like concat ('%',variable,'%'));
   return salida;
-end
+end//
 
 delimiter ;
 
@@ -124,7 +131,7 @@ begin
   declare salida varchar(25);
   set salida = (select nombre from estudiante where email = variable);
   return salida;
-end
+end//
 
 delimiter ;
 
@@ -141,7 +148,7 @@ begin
   declare salida int(20);
   set salida = (select count(*) from estudiante where semestre = variable);
   return salida;
-end
+end//
 
 delimiter ;
 
